@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 public class PlayerLaser extends BaseEntity {
 
     EntityManager enemies;
-    int speed = 5;
+    int speed = 6;
 
     public PlayerLaser(int x, int y, int width, int height, BufferedImage sprite, Handler handler,EntityManager enemies) {
         super(x, y, width, height, sprite, handler);
@@ -19,15 +19,17 @@ public class PlayerLaser extends BaseEntity {
 
     @Override
     public void tick() {
-        super.tick();
-        y-=speed;
-        bounds.y=y;
-        for (BaseEntity enemy:enemies.entities){
-            if (enemy instanceof PlayerShip || enemy instanceof PlayerLaser){
-                continue;
-            }
-            if (enemy.bounds.intersects(bounds)){
-                enemy.damage(this);
+        if (!remove) {
+            super.tick();
+            y -= speed;
+            bounds.y = y;
+            for (BaseEntity enemy : enemies.entities) {
+                if (enemy instanceof PlayerShip || enemy instanceof PlayerLaser) {
+                    continue;
+                }
+                if (enemy.bounds.intersects(bounds)) {
+                    enemy.damage(this);
+                }
             }
         }
     }

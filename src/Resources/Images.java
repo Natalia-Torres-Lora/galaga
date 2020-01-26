@@ -23,6 +23,9 @@ public class Images {
     public static BufferedImage[] pauseToTitleButton;
     public static BufferedImage[] pauseOptionsButton;
     public static BufferedImage[] galagaPlayer;
+    public static BufferedImage[] galagaPlayerDeath;
+    public static BufferedImage[] galagaEnemyDeath;
+    public static BufferedImage[] galagaEnemyBee;
 
     public static BufferedImage galagaImageSheet;
     public SpriteSheet galagaSpriteSheet;
@@ -35,6 +38,9 @@ public class Images {
         pauseOptionsButton = new BufferedImage[2];
         galagaLogo = new BufferedImage[3];
         galagaPlayer = new BufferedImage[8];//not full yet, only has second to last image on sprite sheet
+        galagaPlayerDeath = new BufferedImage[8];
+        galagaEnemyDeath = new BufferedImage[5];
+        galagaEnemyBee = new BufferedImage[8];
 
 
         try {
@@ -72,6 +78,31 @@ public class Images {
             galagaSpriteSheet = new SpriteSheet(galagaImageSheet);
 
             galagaPlayer[0] = galagaSpriteSheet.crop(160,55,15,16);
+
+            galagaPlayerDeath[0] = galagaSpriteSheet.crop(209,48,32,32);
+            galagaPlayerDeath[1] = galagaSpriteSheet.crop(209,48,32,32);
+            galagaPlayerDeath[2] = galagaSpriteSheet.crop(247,48,32,32);
+            galagaPlayerDeath[3] = galagaSpriteSheet.crop(247,48,32,32);
+            galagaPlayerDeath[4] = galagaSpriteSheet.crop(288,47,32,32);
+            galagaPlayerDeath[5] = galagaSpriteSheet.crop(288,47,32,32);
+            galagaPlayerDeath[6] = galagaSpriteSheet.crop(327,47,32,32);
+            galagaPlayerDeath[7] = galagaSpriteSheet.crop(327,47,32,32);
+
+            galagaEnemyDeath[0] = galagaSpriteSheet.crop(201,191,32,32);
+            galagaEnemyDeath[1] = galagaSpriteSheet.crop(223,191,32,32);
+            galagaEnemyDeath[2] = galagaSpriteSheet.crop(247,191,32,32);
+            galagaEnemyDeath[3] = galagaSpriteSheet.crop(280,191,32,32);
+            galagaEnemyDeath[4] = galagaSpriteSheet.crop(320,191,32,32);
+
+            galagaEnemyBee[0] = galagaSpriteSheet.crop(188,178,9,10);
+            galagaEnemyBee[1] = galagaSpriteSheet.crop(162,178,13,10);
+            galagaEnemyBee[2] = galagaSpriteSheet.crop(139,177,11,12);
+            galagaEnemyBee[3] = galagaSpriteSheet.crop(113,176,14,13);
+            galagaEnemyBee[4] = galagaSpriteSheet.crop(90,177,13,13);
+            galagaEnemyBee[5] = galagaSpriteSheet.crop(65,176,13,14);
+            galagaEnemyBee[6] = galagaSpriteSheet.crop(42,178,12,11);
+            galagaEnemyBee[7] = galagaSpriteSheet.crop(19,177,10,13);
+
 
             galagaPlayerLaser = galagaSpriteSheet.crop(365 ,219,3,8);
 

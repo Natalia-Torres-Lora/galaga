@@ -1,8 +1,6 @@
 package Game.GameStates;
 
-import Display.UI.ClickListlener;
-import Display.UI.UIImageButton;
-import Display.UI.UIManager;
+import Game.Galaga.Entities.EnemyBee;
 import Game.Galaga.Entities.EntityManager;
 import Game.Galaga.Entities.PlayerShip;
 import Main.Handler;
@@ -27,7 +25,7 @@ public class GalagaState extends State {
     public GalagaState(Handler handler){
         super(handler);
         refresh();
-        entityManager = new EntityManager(new PlayerShip(handler.getWidth()/2-64,handler.getHeight()- handler.getHeight()/8,64,64,Images.galagaPlayer[0],handler));
+        entityManager = new EntityManager(new PlayerShip(handler.getWidth()/2-64,handler.getHeight()- handler.getHeight()/7,64,64,Images.galagaPlayer[0],handler));
         titleAnimation = new Animation(256,Images.galagaLogo);
     }
 
@@ -37,6 +35,15 @@ public class GalagaState extends State {
         if (Mode.equals("Stage")){
             if (startCooldown<=0) {
                 entityManager.tick();
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
+                    entityManager.entities.add(new EnemyBee(0,0,32,32,handler,3,5));
+                }
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)){
+                    entityManager.entities.add(new EnemyBee(0,0,32,32,handler,3,6));
+                }
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_I)){
+                    entityManager.entities.add(new EnemyBee(0,0,32,32,handler,3,7));
+                }
             }else{
                 startCooldown--;
             }
@@ -52,6 +59,8 @@ public class GalagaState extends State {
                 handler.getMusicHandler().playEffect("Galaga.wav");
 
             }
+
+
         }
 
     }
@@ -61,7 +70,7 @@ public class GalagaState extends State {
         g.setColor(Color.DARK_GRAY);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);
-        g.fillRect(handler.getWidth()/4,0,handler.getWidth()-handler.getWidth()/2,handler.getHeight());
+        g.fillRect(handler.getWidth()/4,0,handler.getWidth()/2,handler.getHeight());
         Random random = new Random(System.nanoTime());
 
         for (int j = 1;j < random.nextInt(15)+60;j++) {
@@ -90,7 +99,6 @@ public class GalagaState extends State {
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5);
-            System.out.println(entityManager.playerShip.getHealth());
             for (int i = 0; i< entityManager.playerShip.getHealth();i++) {
                 g.drawImage(Images.galagaPlayer[0], (handler.getWidth() - handler.getWidth() / 4 + handler.getWidth() / 48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4, handler.getWidth() / 18, handler.getHeight() / 18, null);
             }

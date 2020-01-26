@@ -1,6 +1,7 @@
 package Game.Galaga.Entities;
 
 import Main.Handler;
+import Resources.Animation;
 import Resources.Images;
 
 import java.awt.*;
@@ -12,60 +13,81 @@ import java.awt.image.BufferedImage;
  */
 public class PlayerShip extends BaseEntity{
 
-    private int health = 3,attackCooldown = 30,speed =6;
-    private boolean attacking = false;
+    private int health = 3,attackCooldown = 30,speed =6,destroyedCoolDown = 60*7;
+    private boolean attacking = false, destroyed = false;
+    private Animation deathAnimation;
 
 
      public PlayerShip(int x, int y, int width, int height, BufferedImage sprite, Handler handler) {
         super(x, y, width, height, sprite, handler);
+
+        deathAnimation = new Animation(256,Images.galagaPlayerDeath);
 
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (attacking){
-            if (attackCooldown<=0){
-                attacking = false;
+        if (destroyed){
+            if (destroyedCoolDown<=0){
+                destroyedCoolDown=60*7;
+                destroyed=false;
+                deathAnimation.reset();
+                bounds.x=x;
             }else{
-                attackCooldown--;
+                deathAnimation.tick();
+                destroyedCoolDown--;
             }
-        }
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking){
-            handler.getMusicHandler().playEffect("laser.wav");
-            attackCooldown = 30;
-            attacking = true;
-            handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x+(width/2),this.y-3,width/5,height/2, Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+        }else {
+            if (attacking) {
+                if (attackCooldown <= 0) {
+                    attacking = false;
+                } else {
+                    attackCooldown--;
+                }
+            }
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
+                handler.getMusicHandler().playEffect("laser.wav");
+                attackCooldown = 30;
+                attacking = true;
+                handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
-        }
-        if (handler.getKeyManager().left){
-            x-=(speed);
-        }
-        if (handler.getKeyManager().right){
-            x+=(speed);
-        }
-        bounds.x=x;
+            }
+            if (handler.getKeyManager().left) {
+                x -= (speed);
+            }
+            if (handler.getKeyManager().right) {
+                x += (speed);
+            }
 
+            bounds.x = x;
+        }
 
     }
 
     @Override
     public void render(Graphics g) {
-        super.render(g);
-
+         if (destroyed){
+             if (deathAnimation.end){
+                 g.drawString("READY",handler.getWidth()/2-handler.getWidth()/12,handler.getHeight()/2);
+             }else {
+                 g.drawImage(deathAnimation.getCurrentFrame(), x, y, width, height, null);
+             }
+         }else {
+             super.render(g);
+         }
     }
 
     @Override
     public void damage(BaseEntity damageSource) {
-        super.damage(damageSource);
         if (damageSource instanceof PlayerLaser){
             return;
         }
         health--;
-        if (health <=0){
-            //death
-        }
-        //handler.getGalagaState().entityManager.entities.remove(damageSource);
+        destroyed = true;
+        handler.getMusicHandler().playEffect("explosion.wav");
+
+        bounds.x = -10;
     }
 
     public int getHealth() {

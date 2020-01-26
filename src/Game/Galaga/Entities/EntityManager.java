@@ -18,11 +18,19 @@ public class EntityManager {
 
     public void tick(){
         playerShip.tick();
+        ArrayList<BaseEntity> toRemove = new ArrayList<>();
         for (BaseEntity entity: entities){
+            if (entity.remove){
+                toRemove.add(entity);
+                continue;
+            }
             entity.tick();
             if (entity.bounds.intersects(playerShip.bounds)){
                 playerShip.damage(entity);
             }
+        }
+        for (BaseEntity toErase:toRemove){
+            entities.remove(toErase);
         }
 
     }

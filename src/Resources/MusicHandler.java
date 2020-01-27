@@ -5,6 +5,7 @@ import Main.Handler;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.util.ArrayList;
 
 /**
  * Created by AlexVR on 1/24/2020.
@@ -29,7 +30,7 @@ public class MusicHandler {
                 handler.setBackgroundMusic(clip);
                 handler.setMute(false);
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+               // System.err.println(e.getMessage());
             }
         }
     }
@@ -44,7 +45,7 @@ public class MusicHandler {
                 clip.start();
                 handler.getEffects().add(clip);
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+               // System.err.println(e.getMessage());
             }
         }
     }
@@ -60,8 +61,9 @@ public class MusicHandler {
                 clip.stop();
                 clip.close();
             }
+            handler.setEffects(new ArrayList<>());
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
     }
 
@@ -76,7 +78,7 @@ public class MusicHandler {
             handler.getBackgroundMusic().close();
             handler.setMute(true);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+           // System.err.println(e.getMessage());
         }
     }
 
@@ -85,7 +87,7 @@ public class MusicHandler {
             handler.getBackgroundMusic().stop();
             handler.setMute(true);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
     }
 
@@ -94,7 +96,7 @@ public class MusicHandler {
             handler.getBackgroundMusic().start();
             handler.setMute(false);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            //System.err.println(e.getMessage());
         }
     }
 

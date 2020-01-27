@@ -13,6 +13,7 @@ public class EnemyBee extends BaseEntity {
     Animation idle,turn90Left;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
     int formationX,formationY,speed,centerCoolDown=60;
+    int timeAlive=0;
     public EnemyBee(int x, int y, int width, int height, Handler handler,int row, int col) {
         super(x, y, width, height, Images.galagaEnemyBee[0], handler);
         this.row = row;
@@ -64,6 +65,7 @@ public class EnemyBee extends BaseEntity {
             enemyDeath.tick();
         }
         if (justSpawned){
+            timeAlive++;
             if (!centered && Point.distance(x,y,handler.getWidth()/2,handler.getHeight()/2)>speed){//reach center of screen
                 switch (spawnPos){
                     case 0://left
@@ -107,10 +109,16 @@ public class EnemyBee extends BaseEntity {
                         }
                         break;
                 }
+                if (timeAlive>=60*60*2){
+                    //more than 2 minutes in this state then die
+                    //60 ticks in a second, times 60 is a minute, times 2 is a minute
+                    damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+                }
 
             }else {//move to formation
                 if (!centered){
                     centered = true;
+                    timeAlive = 0;
                 }
                 if (centerCoolDown<=0){
                     if (Point.distance(x, y, formationX, formationY) > speed) {//reach center of screen
@@ -124,11 +132,18 @@ public class EnemyBee extends BaseEntity {
                                 x += speed;
                             }
                         }
+                    }else{
+                        positioned =true;
+                        justSpawned = false;
                     }
                 }else{
                     centerCoolDown--;
                 }
-
+                if (timeAlive>=60*60*2){
+                    //more than 2 minutes in this state then die
+                    //60 ticks in a second, times 60 is a minute, times 2 is a minute
+                    damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+                }
             }
         }else if (positioned){
 

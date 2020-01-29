@@ -1,6 +1,5 @@
 package Game.GameStates;
 
-import Game.Galaga.Entities.EnemyBee;
 import Game.Galaga.Entities.EntityManager;
 import Game.Galaga.Entities.PlayerShip;
 import Main.Handler;
@@ -35,15 +34,6 @@ public class GalagaState extends State {
         if (Mode.equals("Stage")){
             if (startCooldown<=0) {
                 entityManager.tick();
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
-                    entityManager.entities.add(new EnemyBee(0,0,32,32,handler,3,5));
-                }
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)){
-                    entityManager.entities.add(new EnemyBee(0,0,32,32,handler,3,6));
-                }
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_I)){
-                    entityManager.entities.add(new EnemyBee(0,0,32,32,handler,3,7));
-                }
             }else{
                 startCooldown--;
             }

@@ -54,15 +54,14 @@ public class GalagaState extends State {
         }
 
     }
-// Added Blue Galaga Background
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.DARK_GRAY);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);
         g.fillRect(handler.getWidth()/4,0,handler.getWidth()/2,handler.getHeight());
         Random random = new Random(System.nanoTime());
-//N. ADD colores white y magenta 
+
         for (int j = 1;j < random.nextInt(15)+60;j++) {
             switch (random.nextInt(6)) {
                 case 0:
@@ -77,21 +76,15 @@ public class GalagaState extends State {
                 case 3:
                     g.setColor(Color.GREEN);
                     break;
-                case 4:
-                	g.setColor(Color.WHITE);
-                	break;
-                case 5: 
-                	g.setColor(Color.MAGENTA);
-                	break;
+
             }
             int randX = random.nextInt(handler.getWidth() - handler.getWidth() / 2) + handler.getWidth() / 4;
             int randY = random.nextInt(handler.getHeight());
             g.fillRect(randX, randY, 2, 2);
 
         }
-        //ADDED color Magenta color of the text written in the game #1
         if (Mode.equals("Stage")) {
-            g.setColor(Color.MAGENTA);
+            g.setColor(Color.RED);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 62));
             g.drawString("HIGH",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/16);
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
@@ -102,10 +95,9 @@ public class GalagaState extends State {
             }
             if (startCooldown<=0) {
                 entityManager.render(g);
-                // //ADDED color Magenta color of the text written in the game #2
             }else{
                 g.setFont(new Font("TimesRoman", Font.PLAIN, 48));
-                g.setColor(Color.MAGENTA);
+                g.setColor(Color.RED);
                 g.drawString("Start",handler.getWidth()/2-handler.getWidth()/18,handler.getHeight()/2);
             }
         }else{

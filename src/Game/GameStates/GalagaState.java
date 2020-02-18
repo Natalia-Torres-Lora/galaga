@@ -54,10 +54,10 @@ public class GalagaState extends State {
         }
 
     }
-
+// Added Blue Galaga Background
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.DARK_GRAY);
+        g.setColor(Color.BLUE);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);
         g.fillRect(handler.getWidth()/4,0,handler.getWidth()/2,handler.getHeight());

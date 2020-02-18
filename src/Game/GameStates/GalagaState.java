@@ -89,8 +89,9 @@ public class GalagaState extends State {
             g.fillRect(randX, randY, 2, 2);
 
         }
+        //ADDED color Magenta color of the text written in the game #1
         if (Mode.equals("Stage")) {
-            g.setColor(Color.RED);
+            g.setColor(Color.MAGENTA);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 62));
             g.drawString("HIGH",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/16);
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
@@ -101,9 +102,10 @@ public class GalagaState extends State {
             }
             if (startCooldown<=0) {
                 entityManager.render(g);
+                // //ADDED color Magenta color of the text written in the game #2
             }else{
                 g.setFont(new Font("TimesRoman", Font.PLAIN, 48));
-                g.setColor(Color.RED);
+                g.setColor(Color.MAGENTA);
                 g.drawString("Start",handler.getWidth()/2-handler.getWidth()/18,handler.getHeight()/2);
             }
         }else{

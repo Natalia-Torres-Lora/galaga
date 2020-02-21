@@ -56,7 +56,7 @@ public class GalagaState extends State {
     }
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.YELLOW);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);
         g.fillRect(handler.getWidth()/4,0,handler.getWidth()/2,handler.getHeight());

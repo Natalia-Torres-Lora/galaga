@@ -48,7 +48,7 @@ public class PlayerShip extends BaseEntity{
             }
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
                 handler.getMusicHandler().playEffect("laser.wav");
-                attackCooldown = 30;
+                attackCooldown = 15;
                 attacking = true;
                 handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
@@ -80,7 +80,7 @@ public class PlayerShip extends BaseEntity{
 
     @Override
     public void damage(BaseEntity damageSource) {
-        if (damageSource instanceof PlayerLaser){
+        if (damageSource instanceof PlayerLaser ){
             return;
         }
         health--;

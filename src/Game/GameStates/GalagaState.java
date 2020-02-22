@@ -56,7 +56,7 @@ public class GalagaState extends State {
     }
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.ORANGE);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);
         g.fillRect(handler.getWidth()/4,0,handler.getWidth()/2,handler.getHeight());
@@ -94,10 +94,18 @@ public class GalagaState extends State {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 62));
             g.drawString("HIGH",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/16);
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
+            //Adding score string
+            g.setColor(Color.cyan);
+            g.setFont(new Font("TimerRoman", Font.PLAIN, 30));
+            g.drawString("SCORE:",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/3);
+            g.setColor(Color.cyan);
+            g.drawString(String.valueOf(handler.getScoreManager().getGalagaScore()),handler.getWidth()-handler.getWidth()/6,handler.getHeight()/3);
+            
+            
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5);
             for (int i = 0; i< entityManager.playerShip.getHealth();i++) {
-                g.drawImage(Images.galagaPlayer[0], (handler.getWidth() - handler.getWidth() / 4 + handler.getWidth() / 48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4, handler.getWidth() / 18, handler.getHeight() / 18, null);
+                g.drawImage(Images.galagaPlayer[0], (handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4,handler.getWidth()/18,handler.getHeight() / 18, null);     
             }
             if (startCooldown<=0) {
                 entityManager.render(g);
@@ -128,9 +136,8 @@ public class GalagaState extends State {
             }else{
                 g.drawImage(Images.galagaSelect,handler.getWidth()/2-handler.getWidth()/12,handler.getHeight()/2+handler.getHeight()/18,32,32,null);
             }
-
-
         }
+ 
     }
 
     @Override

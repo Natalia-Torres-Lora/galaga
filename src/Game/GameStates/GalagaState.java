@@ -96,10 +96,10 @@ public class GalagaState extends State {
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
             //Adding score string
             g.setColor(Color.cyan);
-            g.setFont(new Font("TimerRoman", Font.PLAIN, 30));
-            g.drawString("SCORE:",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/3);
+            g.setFont(new Font("TimerRoman", Font.PLAIN, 22));
+            g.drawString("SCORE",handler.getWidth()/2-handler.getWidth()/18,32);
             g.setColor(Color.cyan);
-            g.drawString(String.valueOf(handler.getScoreManager().getGalagaScore()),handler.getWidth()-handler.getWidth()/6,handler.getHeight()/3);
+            g.drawString(String.valueOf(handler.getScoreManager().getGalagaScore()),handler.getWidth()/2-handler.getWidth()/40,60);
             
             
             g.setColor(Color.WHITE);
@@ -117,17 +117,12 @@ public class GalagaState extends State {
         }else{
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
-
             g.setColor(Color.MAGENTA);
             g.drawString("HIGH-SCORE:",handler.getWidth()/2-handler.getWidth()/18,32);
-
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()/2-32,64);
-
             g.drawImage(titleAnimation.getCurrentFrame(),handler.getWidth()/2-(handler.getWidth()/12),handler.getHeight()/2-handler.getHeight()/3,handler.getWidth()/6,handler.getHeight()/7,null);
-
             g.drawImage(Images.galagaCopyright,handler.getWidth()/2-(handler.getWidth()/8),handler.getHeight()/2 + handler.getHeight()/3,handler.getWidth()/4,handler.getHeight()/8,null);
-
             g.setFont(new Font("TimesRoman", Font.PLAIN, 48));
             g.drawString("1   PLAYER",handler.getWidth()/2-handler.getWidth()/16,handler.getHeight()/2);
             g.drawString("2   PLAYER",handler.getWidth()/2-handler.getWidth()/16,handler.getHeight()/2+handler.getHeight()/12);

@@ -53,11 +53,18 @@ public class PlayerShip extends BaseEntity{
                 handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
             }
+            //Adding left and right bounds
             if (handler.getKeyManager().left) {
                 x -= (speed);
+                if(x<arena.x) {
+                	x=arena.x;
+                }
             }
             if (handler.getKeyManager().right) {
                 x += (speed);
+                if(x >(arena.x + 655)) {
+                	x = arena.x + 655;
+                }
             }
 
             bounds.x = x;

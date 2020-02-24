@@ -26,6 +26,12 @@ public class Images {
     public static BufferedImage[] galagaPlayerDeath;
     public static BufferedImage[] galagaEnemyDeath;
     public static BufferedImage[] galagaEnemyBee;
+    
+    // Adding my new enemy bee
+    public static BufferedImage[] galagaMyEnemy;
+    // Declaring enemyLaser
+    public static BufferedImage galagaEnemyLaser;
+    
 
     public static BufferedImage galagaImageSheet;
     public SpriteSheet galagaSpriteSheet;
@@ -41,6 +47,9 @@ public class Images {
         galagaPlayerDeath = new BufferedImage[8];
         galagaEnemyDeath = new BufferedImage[5];
         galagaEnemyBee = new BufferedImage[8];
+        
+        // Adding my new enemy image
+        galagaMyEnemy = new BufferedImage[8];
 
 
         try {
@@ -105,8 +114,19 @@ public class Images {
 
 
             galagaPlayerLaser = galagaSpriteSheet.crop(365 ,219,3,8);
-
-
+            
+            // Adding EnemyLaser SriteSheet
+            galagaEnemyLaser = galagaSpriteSheet.crop(379, 75, 3, 8);
+            
+            //Adding my new enemy bee crop image
+            galagaMyEnemy[0] = galagaSpriteSheet.crop(188, 154, 8, 10);
+            galagaMyEnemy[1] = galagaSpriteSheet.crop(162, 154, 13, 10);
+            galagaMyEnemy[2] = galagaSpriteSheet.crop(138, 153, 11, 12);
+            galagaMyEnemy[3] = galagaSpriteSheet.crop(133, 153, 14, 12);
+            galagaMyEnemy[4] = galagaSpriteSheet.crop(90, 153, 12, 12);
+            galagaMyEnemy[5] = galagaSpriteSheet.crop(66, 152, 12, 14);
+            galagaMyEnemy[6] = galagaSpriteSheet.crop(42, 153, 12, 11);
+            galagaMyEnemy[7] = galagaSpriteSheet.crop(19, 153, 10, 13);
 
         }catch (IOException e) {
         e.printStackTrace();

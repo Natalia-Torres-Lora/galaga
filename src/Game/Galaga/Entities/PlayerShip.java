@@ -62,8 +62,8 @@ public class PlayerShip extends BaseEntity{
             }
             if (handler.getKeyManager().right) {
                 x += (speed);
-                if(x >(arena.x + 655)) {
-                	x = arena.x + 655;
+                if(x >(arena.x + arena.width)-width){
+                	x = (arena.x + arena.width)-width;
                 }
             }
 

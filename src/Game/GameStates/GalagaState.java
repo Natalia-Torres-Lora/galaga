@@ -14,18 +14,18 @@ import java.util.Random;
  * Created by AlexVR on 1/24/2020.
  */
 public class GalagaState extends State {
+	
 	public EntityManager entityManager;
-    public String Mode = "Menu";
-    private Animation titleAnimation;
-    public int selectPlayers = 1;
-    public int startCooldown = 60*7;//seven seconds for the music to finish
- 
+	public String Mode = "Menu";
+	private Animation titleAnimation;
+	public int selectPlayers = 1;
+	public int startCooldown = 60*7;//seven seconds for the music to finish
+
     public GalagaState(Handler handler){
         super(handler);
         refresh();
         entityManager = new EntityManager(new PlayerShip(handler.getWidth()/2-64,handler.getHeight()- handler.getHeight()/7,64,64,Images.galagaPlayer[0],handler));
-        titleAnimation = new Animation(256,Images.galagaLogo);
-          
+        titleAnimation = new Animation(256,Images.galagaLogo);         
     }
     
 @Override
@@ -95,12 +95,13 @@ public class GalagaState extends State {
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5);
-            //Adding new score string top of screen
+           
+            //Adding new score string on top of screen
             g.setColor(Color.cyan);
             g.setFont(new Font("TimerRoman", Font.PLAIN, 22));
             g.drawString("SCORE",handler.getWidth()/2-handler.getWidth()/18,32);
             g.setColor(Color.cyan);
-            g.drawString(String.valueOf(handler.getScoreManager().getGalagaScore()),handler.getWidth()/2-handler.getWidth()/40,60);
+            g.drawString(String.valueOf(handler.getScoreManager().getGalagaCurrentScore()),handler.getWidth()/2-handler.getWidth()/40,60);
             
             
             for (int i = 0; i< entityManager.playerShip.getHealth();i++) {

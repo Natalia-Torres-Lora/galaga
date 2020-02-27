@@ -13,6 +13,8 @@ public class KeyManager implements KeyListener {
 	private boolean[] keys,justPressed,cantPress;
 	public boolean up=false, down=false, left=false, right=false;
 	public boolean pausebutt=false;
+	public boolean die=false, addLife=false;
+	public boolean addBee=false;
 
 
 	public KeyManager(){
@@ -43,6 +45,11 @@ public class KeyManager implements KeyListener {
 		right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
 
 		pausebutt = keys[KeyEvent.VK_ESCAPE];
+		
+		die = keyJustPressed(KeyEvent.VK_N);
+		addLife = keyJustPressed(KeyEvent.VK_L);
+		
+		addBee = keys[KeyEvent.VK_P];
 
 	}
 

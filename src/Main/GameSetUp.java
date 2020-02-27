@@ -1,6 +1,9 @@
 package Main;
 
 import Display.DisplayScreen;
+import Game.Galaga.Entities.BaseEntity;
+import Game.Galaga.Entities.EnemyBee;
+import Game.Galaga.Entities.PlayerShip;
 import Game.GameStates.*;
 import Input.KeyManager;
 import Input.MouseManager;
@@ -18,195 +21,198 @@ import java.awt.image.BufferStrategy;
  */
 
 public class GameSetUp implements Runnable {
-    private DisplayScreen display;
-    private int width, height;
-    private String title;
+	private DisplayScreen display;
+	private int width, height;
+	private String title;
 
-    private boolean running = false;
-    private Thread thread;
-
-
-    //Input
-    private KeyManager keyManager;
-    private MouseManager mouseManager;
-
-    //Handler
-    private Handler handler;
-
-    //States
-    public State gameState;
-    public State menuState;
-    public State pauseState;
-    public State galagaState;
+	private boolean running = false;
+	private Thread thread;
 
 
+	//Input
+	private KeyManager keyManager;
+	private MouseManager mouseManager;
+
+	//Handler
+	private Handler handler;
+
+	//States
+	public State gameState;
+	public State menuState;
+	public State pauseState;
+	public State galagaState;
+	public State gameOverState;
 
 
-    GameSetUp(String title, int width, int height){
-
-        this.width = width;
-        this.height = height;
-        this.title = title;
-        keyManager = new KeyManager();
-        mouseManager = new MouseManager();
-
-    }
-
-    private void init(){
-        display = new DisplayScreen(title, width, height);
-        display.getFrame().addKeyListener(keyManager);
-        display.getFrame().addMouseListener(mouseManager);
-        display.getFrame().addMouseMotionListener(mouseManager);
-        display.getCanvas().addMouseListener(mouseManager);
-        display.getCanvas().addMouseMotionListener(mouseManager);
-
-        //checks for all images to exist
-        Images img = new Images();
 
 
-        handler = new Handler(this);
-        handler.setDisplayScreen(display);
+	GameSetUp(String title, int width, int height){
 
-        gameState = new GameState(handler);
-        menuState = new MenuState(handler);
-        pauseState = new PauseState(handler);
-        galagaState = new GalagaState(handler);
+		this.width = width;
+		this.height = height;
+		this.title = title;
+		keyManager = new KeyManager();
+		mouseManager = new MouseManager();
 
-        handler.setScoreManager(new ScoreManager(handler));
-        handler.setMusicHandler(new MusicHandler(handler));
-        handler.getMusicHandler().startMusic("nature.wav");
+	}
 
-        handler.changeState(menuState);
+	private void init(){
+		display = new DisplayScreen(title, width, height);
+		display.getFrame().addKeyListener(keyManager);
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
 
-    }
-
-
-    public void reStart(boolean clearScore){
-        gameState = new GameState(handler);
-        menuState = new MenuState(handler);
-        pauseState = new PauseState(handler);
-        if (clearScore){
-            handler.setScoreManager(new ScoreManager(handler));
-        }
-        handler.changeState(menuState);
-
-    }
-
-     synchronized void start(){
-        if(running)
-            return;
-        running = true;
-        //this runs the run method in this  class
-        thread = new Thread(this);
-        thread.start();
-    }
-
-    public void run(){
-
-        //initiallizes everything in order to run without breaking
-        init();
-
-        int fps = 60;
-        double timePerTick = 1000000000 / fps;
-        double delta = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-        int ticks = 0;
-
-        while(running){
-            //makes sure the games runs smoothly at 60 FPS
-            now = System.nanoTime();
-            delta += (now - lastTime) / timePerTick;
-            timer += now - lastTime;
-            lastTime = now;
-
-            if(delta >= 1){
-                //re-renders and ticks the game around 60 times per second
-                tick();
-                render();
-                ticks++;
-                delta--;
-            }
-
-            if(timer >= 1000000000){
-                ticks = 0;
-                timer = 0;
-            }
-        }
-
-        stop();
-
-    }
-
-    private void tick(){
-        //checks for key types and manages them
-        keyManager.tick();
+		//checks for all images to exist
+		Images img = new Images();
 
 
-        if (keyManager.keyJustPressed(KeyEvent.VK_F11)){
-            handler.setFullScreen(display.flipFullScreen());
-        }
+		handler = new Handler(this);
+		handler.setDisplayScreen(display);
 
-        if (keyManager.keyJustPressed(KeyEvent.VK_R)){
-            handler.getState().refresh();
-        }
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
+		pauseState = new PauseState(handler);
+		galagaState = new GalagaState(handler);
+		gameOverState = new GameOverState(handler);
 
-        if (keyManager.keyJustPressed(KeyEvent.VK_M)){
-            if (handler.isMute()){
-                handler.getMusicHandler().resumeMusic();
-            }else{
-                handler.getMusicHandler().pauseMusic();
-            }
-        }
+		handler.setScoreManager(new ScoreManager(handler));
+		handler.setMusicHandler(new MusicHandler(handler));
+		handler.getMusicHandler().startMusic("nature.wav");
+
+		handler.changeState(menuState);
+
+	}
 
 
-        //game states are the menus
-        if(State.getState() != null)
-            State.getState().tick();
-    }
+	public void reStart(boolean clearScore){
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
+		pauseState = new PauseState(handler);
+		gameOverState = new GameOverState(handler);
+		if (clearScore){
+			handler.setScoreManager(new ScoreManager(handler));
+		}
+		handler.changeState(menuState);
 
-    private void render(){
-        BufferStrategy bs = display.getCanvas().getBufferStrategy();
-        if(bs == null){
-            display.getCanvas().createBufferStrategy(3);
-            return;
-        }
-        Graphics g = bs.getDrawGraphics();
-        //Clear Screen
-        g.clearRect(0, 0, width, height);
+	}
 
-        //Draw Here!
-        if(State.getState() != null) {
-            State.getState().render(g);
-        }
-        if (handler.isMute()){
-            g.drawImage(Images.muteIcon,12,12,64,64,null);
-        }
+	synchronized void start(){
+		if(running)
+			return;
+		running = true;
+		//this runs the run method in this  class
+		thread = new Thread(this);
+		thread.start();
+	}
 
-        //End Drawing!
-        bs.show();
-        g.dispose();
-    }
+	public void run(){
 
-    private synchronized void stop(){
-        if(!running)
-            return;
-        running = false;
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+		//initiallizes everything in order to run without breaking
+		init();
 
-     KeyManager getKeyManager(){
-        return keyManager;
-    }
+		int fps = 60;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
 
-    MouseManager getMouseManager(){
-        return mouseManager;
-    }
+		while(running){
+			//makes sure the games runs smoothly at 60 FPS
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			lastTime = now;
+
+			if(delta >= 1){
+				//re-renders and ticks the game around 60 times per second
+				tick();
+				render();
+				ticks++;
+				delta--;
+			}
+
+			if(timer >= 1000000000){
+				ticks = 0;
+				timer = 0;
+			}
+		}
+
+		stop();
+
+	}
+
+	private void tick(){
+		//checks for key types and manages them
+		keyManager.tick();
+
+
+		if (keyManager.keyJustPressed(KeyEvent.VK_F11)){
+			handler.setFullScreen(display.flipFullScreen());
+		}
+
+		if (keyManager.keyJustPressed(KeyEvent.VK_R)){
+			handler.getState().refresh();
+		}
+
+		if (keyManager.keyJustPressed(KeyEvent.VK_M)){
+			if (handler.isMute()){
+				handler.getMusicHandler().resumeMusic();
+			}else{
+				handler.getMusicHandler().pauseMusic();
+			}
+		}
+
+
+		//game states are the menus
+		if(State.getState() != null)
+			State.getState().tick();
+	}
+
+	private void render(){
+		BufferStrategy bs = display.getCanvas().getBufferStrategy();
+		if(bs == null){
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		Graphics g = bs.getDrawGraphics();
+		//Clear Screen
+		g.clearRect(0, 0, width, height);
+
+		//Draw Here!
+		if(State.getState() != null) {
+			State.getState().render(g);
+		}
+		if (handler.isMute()){
+			g.drawImage(Images.muteIcon,12,12,64,64,null);
+		}
+
+		//End Drawing!
+		bs.show();
+		g.dispose();
+	}
+
+	private synchronized void stop(){
+		if(!running)
+			return;
+		running = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	KeyManager getKeyManager(){
+		return keyManager;
+	}
+
+	MouseManager getMouseManager(){
+		return mouseManager;
+	}
 
 }
 

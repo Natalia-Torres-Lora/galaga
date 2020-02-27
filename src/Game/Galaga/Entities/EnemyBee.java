@@ -5,6 +5,7 @@ import Resources.Animation;
 import Resources.Images;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class EnemyBee extends BaseEntity {
@@ -150,6 +151,7 @@ public class EnemyBee extends BaseEntity {
         }else if (attacking){
 
         }
+        
         bounds.x=x;
         bounds.y=y;
     }

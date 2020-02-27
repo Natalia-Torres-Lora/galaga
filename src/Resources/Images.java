@@ -12,6 +12,7 @@ public class Images {
 
     public static BufferedImage titleScreenBackground;
     public static BufferedImage pauseBackground;
+    public static BufferedImage gameOverBackground;
     public static BufferedImage selectionBackground;
     public static BufferedImage galagaCopyright;
     public static BufferedImage galagaSelect;
@@ -22,10 +23,12 @@ public class Images {
     public static BufferedImage[] pauseResumeButton;
     public static BufferedImage[] pauseToTitleButton;
     public static BufferedImage[] pauseOptionsButton;
+    public static BufferedImage[] restartButton;
     public static BufferedImage[] galagaPlayer;
     public static BufferedImage[] galagaPlayerDeath;
     public static BufferedImage[] galagaEnemyDeath;
     public static BufferedImage[] galagaEnemyBee;
+    
 
     public static BufferedImage galagaImageSheet;
     public SpriteSheet galagaSpriteSheet;
@@ -36,6 +39,7 @@ public class Images {
         pauseResumeButton = new BufferedImage[2];
         pauseToTitleButton = new BufferedImage[2];
         pauseOptionsButton = new BufferedImage[2];
+        restartButton = new BufferedImage[2];
         galagaLogo = new BufferedImage[3];
         galagaPlayer = new BufferedImage[8];//not full yet, only has second to last image on sprite sheet
         galagaPlayerDeath = new BufferedImage[8];
@@ -52,6 +56,8 @@ public class Images {
             titleScreenBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Title.png"));
 
             pauseBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Pause.png"));
+            
+            gameOverBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/GameOver.png"));
 
             selectionBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Selection.png"));
 
@@ -73,6 +79,10 @@ public class Images {
 
             pauseOptionsButton[0] = ImageIO.read(getClass().getResourceAsStream("/UI/Buttons/Pause/ToOptions/NormalHoverToOptionsButton.png"));
             pauseOptionsButton[1] = ImageIO.read(getClass().getResourceAsStream("/UI/Buttons/Pause/ToOptions/PressedToOptionsButton.png"));
+            
+            restartButton[0] = ImageIO.read(getClass().getResourceAsStream("/UI/Buttons/Restart/NormalHoverRestart.png"));
+            restartButton[1] = ImageIO.read(getClass().getResourceAsStream("/UI/Buttons/Restart/PressedRestart.png"));
+           
 
             galagaImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/Galaga/Galaga.png"));
             galagaSpriteSheet = new SpriteSheet(galagaImageSheet);

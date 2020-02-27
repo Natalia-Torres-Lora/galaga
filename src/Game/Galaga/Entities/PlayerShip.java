@@ -27,33 +27,33 @@ public class PlayerShip extends BaseEntity{
 		deathAnimation = new Animation(256,Images.galagaPlayerDeath);
 
 	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		if (destroyed){
-			if (destroyedCoolDown<=0){
-				destroyedCoolDown=60*7;
-				destroyed=false;
-				deathAnimation.reset();
-				bounds.x=x;
-			}else{
-				deathAnimation.tick();
-				destroyedCoolDown--;
-			}
-		}else {
-			if (attacking) {
-				if (attackCooldown <= 0) {
-					attacking = false;
-				} else {
-					attackCooldown--;
-				}
-			}
-			if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
-				handler.getMusicHandler().playEffect("laser.wav");
-				attackCooldown = 30;
-				attacking = true;
-				handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
+	
+    @Override
+    public void tick() {
+        super.tick();
+        if (destroyed){
+            if (destroyedCoolDown<=0){
+                destroyedCoolDown=60*7;
+                destroyed=false;
+                deathAnimation.reset();
+                bounds.x=x;
+            }else{
+                deathAnimation.tick();
+                destroyedCoolDown--;
+            }
+        }else {
+            if (attacking) {
+                if (attackCooldown <= 0) {
+                    attacking = false;
+                } else {
+                    attackCooldown--;
+                }
+            }
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
+                handler.getMusicHandler().playEffect("laser.wav");
+                attackCooldown = 15;
+                attacking = true;
+                handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
 			}
 			if (handler.getKeyManager().left) {
@@ -62,6 +62,20 @@ public class PlayerShip extends BaseEntity{
 			if (handler.getKeyManager().right) {
 				x += (speed);
 			}
+            }
+            //Adding left and right bounds
+            if (handler.getKeyManager().left) {
+                x -= (speed);
+                if(x<arena.x) {
+                	x=arena.x;
+                }
+            }
+            if (handler.getKeyManager().right) {
+                x += (speed);
+                if(x >(arena.x + arena.width)-width){
+                	x = (arena.x + arena.width)-width;
+                }
+            }
 
 			if (handler.getKeyManager().die){
 				if(getHealth()==0) {
@@ -81,7 +95,7 @@ public class PlayerShip extends BaseEntity{
 			bounds.x = x;
 		}
 
-	}
+    
 
 	@Override
 	public void render(Graphics g) {

@@ -13,6 +13,7 @@ public class ScoreManager {
     //Galaga
     private int galagaHighScore=0;
     private int galagaCurrentScore=0;
+    
 
     public ScoreManager(Handler handler) {
         this.handler = handler;
@@ -41,4 +42,5 @@ public class ScoreManager {
     public void removeGalagaCurrentScore(int galagaCurrentScore) {
         this.galagaCurrentScore -= galagaCurrentScore;
     }
+    
 }

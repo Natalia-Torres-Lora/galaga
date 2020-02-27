@@ -14,22 +14,21 @@ import java.util.Random;
  * Created by AlexVR on 1/24/2020.
  */
 public class GalagaState extends State {
-
-    public EntityManager entityManager;
-    public String Mode = "Menu";
-    private Animation titleAnimation;
-    public int selectPlayers = 1;
-    public int startCooldown = 60*7;//seven seconds for the music to finish
+	
+	public EntityManager entityManager;
+	public String Mode = "Menu";
+	private Animation titleAnimation;
+	public int selectPlayers = 1;
+	public int startCooldown = 60*7;//seven seconds for the music to finish
 
     public GalagaState(Handler handler){
         super(handler);
         refresh();
         entityManager = new EntityManager(new PlayerShip(handler.getWidth()/2-64,handler.getHeight()- handler.getHeight()/7,64,64,Images.galagaPlayer[0],handler));
-        titleAnimation = new Animation(256,Images.galagaLogo);
+        titleAnimation = new Animation(256,Images.galagaLogo);         
     }
-
-
-    @Override
+    
+@Override
     public void tick() {
         if (Mode.equals("Stage")){
             if (startCooldown<=0) {
@@ -96,8 +95,17 @@ public class GalagaState extends State {
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5);
+           
+            //Adding new score string on top of screen
+            g.setColor(Color.cyan);
+            g.setFont(new Font("TimerRoman", Font.PLAIN, 22));
+            g.drawString("SCORE",handler.getWidth()/2-handler.getWidth()/18,32);
+            g.setColor(Color.cyan);
+            g.drawString(String.valueOf(handler.getScoreManager().getGalagaCurrentScore()),handler.getWidth()/2-handler.getWidth()/40,60);
+            
+            
             for (int i = 0; i< entityManager.playerShip.getHealth();i++) {
-                g.drawImage(Images.galagaPlayer[0], (handler.getWidth() - handler.getWidth() / 4 + handler.getWidth() / 48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4, handler.getWidth() / 18, handler.getHeight() / 18, null);
+                g.drawImage(Images.galagaPlayer[0],(handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4,handler.getWidth()/18,handler.getHeight() / 18, null);     
             }
             if (startCooldown<=0) {
                 entityManager.render(g);
@@ -109,17 +117,12 @@ public class GalagaState extends State {
         }else{
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
-
             g.setColor(Color.MAGENTA);
             g.drawString("HIGH-SCORE:",handler.getWidth()/2-handler.getWidth()/18,32);
-
             g.setColor(Color.WHITE);
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()/2-32,64);
-
             g.drawImage(titleAnimation.getCurrentFrame(),handler.getWidth()/2-(handler.getWidth()/12),handler.getHeight()/2-handler.getHeight()/3,handler.getWidth()/6,handler.getHeight()/7,null);
-
             g.drawImage(Images.galagaCopyright,handler.getWidth()/2-(handler.getWidth()/8),handler.getHeight()/2 + handler.getHeight()/3,handler.getWidth()/4,handler.getHeight()/8,null);
-
             g.setFont(new Font("TimesRoman", Font.PLAIN, 48));
             g.drawString("1   PLAYER",handler.getWidth()/2-handler.getWidth()/16,handler.getHeight()/2);
             g.drawString("2   PLAYER",handler.getWidth()/2-handler.getWidth()/16,handler.getHeight()/2+handler.getHeight()/12);
@@ -128,9 +131,8 @@ public class GalagaState extends State {
             }else{
                 g.drawImage(Images.galagaSelect,handler.getWidth()/2-handler.getWidth()/12,handler.getHeight()/2+handler.getHeight()/18,32,32,null);
             }
-
-
         }
+ 
     }
 
     @Override

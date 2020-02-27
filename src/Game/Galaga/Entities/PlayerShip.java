@@ -7,6 +7,7 @@ import Resources.Images;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
@@ -19,15 +20,16 @@ public class PlayerShip extends BaseEntity{
 	private int health = 3,attackCooldown = 30,speed =6,destroyedCoolDown = 60*7;
 	private boolean attacking = false, destroyed = false;
 	private Animation deathAnimation;
+//	//Random ran = new Random();
+//	int position[][] = new int[4][8];
+//	int oldPosition[][]=new int[4][8];
 
+     public PlayerShip(int x, int y, int width, int height, BufferedImage sprite, Handler handler) {
+        super(x, y, width, height, sprite, handler);
+        deathAnimation = new Animation(256,Images.galagaPlayerDeath);
+           
+    }
 
-	public PlayerShip(int x, int y, int width, int height, BufferedImage sprite, Handler handler) {
-		super(x, y, width, height, sprite, handler);
-
-		deathAnimation = new Animation(256,Images.galagaPlayerDeath);
-
-	}
-	
     @Override
     public void tick() {
         super.tick();
@@ -62,7 +64,22 @@ public class PlayerShip extends BaseEntity{
 			if (handler.getKeyManager().right) {
 				x += (speed);
 			}
+            if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
+            	int row= new Random().nextInt(3)+3;
+            	int col= new Random().nextInt(8);
+//            	while(position[row][col]==oldPosition[row][col]) {
+//            		row=new Random().nextInt(3)+3;
+//            		col= new Random().nextInt(8);
+//            		oldPosition[row][col]=position[row][col];
+            	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
+            	
             }
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)) {
+            	int row= new Random().nextInt(2)+1;
+            	int col= new Random().nextInt(6)+1;
+            	handler.getGalagaState().entityManager.entities.add(new MyEnemy(0,0,32,32,handler,row,col));
+            }           
+            
             //Adding left and right bounds
             if (handler.getKeyManager().left) {
                 x -= (speed);
@@ -72,11 +89,10 @@ public class PlayerShip extends BaseEntity{
             }
             if (handler.getKeyManager().right) {
                 x += (speed);
-                if(x >(arena.x + arena.width)-width){
-                	x = (arena.x + arena.width)-width;
+                if(x >(arena.x + arena.width-width)){
+                	x = arena.x + arena.width-width;
                 }
             }
-
 			if (handler.getKeyManager().die){
 				if(getHealth()==0) {
 					handler.changeState(handler.getGameOverState());
@@ -85,15 +101,17 @@ public class PlayerShip extends BaseEntity{
 					setHealth(getHealth()-1);
 					destroyed = true;
 				}
+				
 			}
-
+            
 			if (handler.getKeyManager().addLife){
 				if(getHealth()!=3)
 					setHealth(getHealth()+1);
 			}
 
 			bounds.x = x;
-		}
+    }
+}
 
     
 

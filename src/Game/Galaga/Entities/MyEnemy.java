@@ -1,4 +1,4 @@
-package Game.Galaga.Entities;
+  package Game.Galaga.Entities;
 
 import Main.Handler;
 import Resources.Animation;
@@ -6,10 +6,15 @@ import Resources.Images;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class MyEnemy extends BaseEntity {
     int row,col;//row 3-4, col 0-7
     boolean justSpawned=true,attacking=false, positioned=false,hit=false,centered = false;
+    
+    Random timer = new Random();
+    int cooldown = 60*timer.nextInt(30);
+    
     Animation idle,turn90Left;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
     int formationX,formationY,speed,centerCoolDown=60;
@@ -30,7 +35,7 @@ public class MyEnemy extends BaseEntity {
     }
 
     private void spawn() {
-        spawnPos = random.nextInt(4);
+        spawnPos = random.nextInt(3);
         switch (spawnPos){
             case 0://left
                 x = (handler.getWidth()/4)-width;
@@ -147,8 +152,7 @@ public class MyEnemy extends BaseEntity {
             }
         }else if (positioned){
 
-        }else if (attacking){
-        	
+        }else if (attacking){      	
 
         }
         bounds.x=x;
@@ -174,8 +178,6 @@ public class MyEnemy extends BaseEntity {
         if (damageSource instanceof PlayerLaser){
             hit=true;
             handler.getMusicHandler().playEffect("explosion.wav");
-            //Adding 100 points
-            
             damageSource.remove = true;
             
             

@@ -43,7 +43,7 @@ public class BaseEntity {
         if (arena.contains(bounds) && !remove) {
             g.drawImage(sprite, x, y, width, height, null);
             if (Handler.DEBUG) {
-                g.setColor(Color.red);
+                g.setColor(Color.RED);
                 ((Graphics2D) g).draw(bounds);
             }
         }

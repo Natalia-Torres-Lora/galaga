@@ -3,14 +3,16 @@ package Game.Galaga.Entities;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
+import Resources.ScoreManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class EnemyBee extends BaseEntity {
     int row,col;//row 3-4, col 0-7
-    boolean justSpawned=true,attacking=false, positioned=false,hit=false,centered = false;
+    boolean justSpawned=true,attacking=false, positioned=false,hit=false,centered = false;  
     Animation idle,turn90Left;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
     int formationX,formationY,speed,centerCoolDown=60;
@@ -27,7 +29,7 @@ public class EnemyBee extends BaseEntity {
         spawn();
         speed = 4;
         formationX=(handler.getWidth()/4)+(col*((handler.getWidth()/2)/8))+8;
-        formationY=(row*(handler.getHeight()/10))+8;
+        formationY=(row*(handler.getHeight()/10))+8;    
     }
 
     private void spawn() {
@@ -147,7 +149,7 @@ public class EnemyBee extends BaseEntity {
                 }
             }
         }else if (positioned){
-
+        	
         }else if (attacking){
 
         }

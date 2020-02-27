@@ -1,9 +1,6 @@
 package Main;
 
 import Display.DisplayScreen;
-import Game.Galaga.Entities.BaseEntity;
-import Game.Galaga.Entities.EnemyBee;
-import Game.Galaga.Entities.PlayerShip;
 import Game.GameStates.*;
 import Input.KeyManager;
 import Input.MouseManager;

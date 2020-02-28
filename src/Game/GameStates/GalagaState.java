@@ -55,6 +55,8 @@ public class GalagaState extends State {
     }
     @Override
     public void render(Graphics g) {
+    	if(handler.getScoreManager().getGalagaCurrentScore()>handler.getScoreManager().getGalagaHighScore())
+        	handler.getScoreManager().setGalagaHighScore(handler.getScoreManager().getGalagaCurrentScore());
         g.setColor(Color.CYAN);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);

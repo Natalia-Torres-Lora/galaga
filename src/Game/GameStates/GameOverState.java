@@ -2,6 +2,10 @@ package Game.GameStates;
 
 import Display.UI.UIImageButton;
 import Display.UI.UIManager;
+import Game.Galaga.Entities.EnemyBee;
+import Game.Galaga.Entities.EntityManager;
+import Game.Galaga.Entities.PlayerLaser;
+import Game.Galaga.Entities.PlayerShip;
 import Main.Handler;
 import Resources.Images;
 
@@ -47,19 +51,25 @@ public class GameOverState extends State {
 
     @Override
     public void refresh() {
+    	
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUimanager(uiManager);
 
         uiManager.addObjects(new UIImageButton(56, 223, 128, 64, Images.restartButton, () -> {
             handler.getMouseManager().setUimanager(null);
                 State.setState(handler.getGalagaState());
+                handler.getGalagaState().entityManager.entities.clear();
                 handler.getGalagaState().entityManager.playerShip.setHealth(3);
+                handler.getScoreManager().setGalagaCurrentScore(0);
+                
         }));
 
         uiManager.addObjects(new UIImageButton(56, (223+(64+16)), 128, 64, Images.pauseToTitleButton, () -> {
             handler.getMouseManager().setUimanager(null);
             State.setState(handler.getMenuState());
+            handler.getGalagaState().entityManager.entities.clear();
             handler.getGalagaState().entityManager.playerShip.setHealth(3);
+            handler.getScoreManager().setGalagaCurrentScore(0);
         }));
     }
 }

@@ -179,7 +179,7 @@ public class MyEnemy extends BaseEntity {
             hit=true;
             handler.getMusicHandler().playEffect("explosion.wav");
             damageSource.remove = true;
-            
+            handler.getScoreManager().setGalagaCurrentScore(handler.getScoreManager().getGalagaCurrentScore()+100);
             
         }
     }

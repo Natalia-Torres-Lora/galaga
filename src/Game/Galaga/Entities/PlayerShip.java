@@ -99,7 +99,7 @@ public class PlayerShip extends BaseEntity{
 				}
 				else {
 					setHealth(getHealth()-1);
-					destroyed = true;
+//					destroyed = true;
 				}
 				
 			}

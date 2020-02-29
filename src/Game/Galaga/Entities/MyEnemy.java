@@ -6,15 +6,10 @@ import Resources.Images;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class MyEnemy extends BaseEntity {
     int row,col;//row 3-4, col 0-7
     boolean justSpawned=true,attacking=false, positioned=false,hit=false,centered = false;
-    
-    Random timer = new Random();
-    int cooldown = 60*timer.nextInt(30);
-    
     Animation idle,turn90Left;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
     int formationX,formationY,speed,centerCoolDown=60;
@@ -114,7 +109,7 @@ public class MyEnemy extends BaseEntity {
                         }
                         break;
                 }
-                if (timeAlive>=60*60*2){
+                if (timeAlive>=60*60){
                     //more than 2 minutes in this state then die
                     //60 ticks in a second, times 60 is a minute, times 2 is a minute
                     damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
@@ -144,17 +139,18 @@ public class MyEnemy extends BaseEntity {
                 }else{
                     centerCoolDown--;
                 }
-                if (timeAlive>=60*60*2){
+                if (timeAlive>=60*60){
                     //more than 2 minutes in this state then die
                     //60 ticks in a second, times 60 is a minute, times 2 is a minute
-                    damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+                    damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));                  
                 }
             }
         }else if (positioned){
+ 
 
-        }else if (attacking){      	
+        }else if (attacking){
 
-        }
+        }      
         bounds.x=x;
         bounds.y=y;
     }

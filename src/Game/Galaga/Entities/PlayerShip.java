@@ -57,7 +57,7 @@ public class PlayerShip extends BaseEntity{
 
             }
             if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
-            	int row= new Random().nextInt(3)+3;
+            	int row= new Random().nextInt(2)+3;
             	int col= new Random().nextInt(8);
             	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
 

@@ -15,9 +15,6 @@ public class EnemyBee extends BaseEntity {
     int row,col;//row 3-4, col 0-7
     boolean justSpawned=true,attacking=false, positioned=false,hit=false,centered = false;  
     
-    private int attackCooldown=60*3;
-    PlayerShip playerShip;
-    
     Animation idle,turn90Left;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
     int formationX,formationY,speed,centerCoolDown=60;

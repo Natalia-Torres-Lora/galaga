@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import Game.GameStates.MenuState;
-import Game.GameStates.PauseState;
+//import Game.GameStates.MenuState;
+//import Game.GameStates.PauseState;
 
 /**
  * Created by AlexVR on 1/25/2020
@@ -20,9 +20,7 @@ public class PlayerShip extends BaseEntity{
 	private int health = 3,attackCooldown = 30,speed =6,destroyedCoolDown = 60*7;
 	private boolean attacking = false, destroyed = false;
 	private Animation deathAnimation;
-//	//Random ran = new Random();
-//	int position[][] = new int[4][8];
-//	int oldPosition[][]=new int[4][8];
+
 
      public PlayerShip(int x, int y, int width, int height, BufferedImage sprite, Handler handler) {
         super(x, y, width, height, sprite, handler);
@@ -57,22 +55,12 @@ public class PlayerShip extends BaseEntity{
                 attacking = true;
                 handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
-			}
-			if (handler.getKeyManager().left) {
-				x -= (speed);
-			}
-			if (handler.getKeyManager().right) {
-				x += (speed);
-			}
+            }
             if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
             	int row= new Random().nextInt(3)+3;
             	int col= new Random().nextInt(8);
-//            	while(position[row][col]==oldPosition[row][col]) {
-//            		row=new Random().nextInt(3)+3;
-//            		col= new Random().nextInt(8);
-//            		oldPosition[row][col]=position[row][col];
             	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
-            	
+
             }
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)) {
             	int row= new Random().nextInt(2)+1;
@@ -99,7 +87,6 @@ public class PlayerShip extends BaseEntity{
 				}
 				else {
 					setHealth(getHealth()-1);
-//					destroyed = true;
 				}
 				
 			}
@@ -119,7 +106,7 @@ public class PlayerShip extends BaseEntity{
 	public void render(Graphics g) {
 		if (destroyed){
 			if (deathAnimation.end){
-				g.drawString("READY",handler.getWidth()/2-handler.getWidth()/12,handler.getHeight()/2);
+				g.drawString("READY",handler.getWidth()/2-handler.getWidth()/18,handler.getHeight()/2);
 			}else {
 				g.drawImage(deathAnimation.getCurrentFrame(), x, y, width, height, null);
 			}

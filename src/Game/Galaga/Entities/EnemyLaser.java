@@ -24,7 +24,7 @@ public class EnemyLaser extends BaseEntity {
             y += speed;
             bounds.y = y;
             for (BaseEntity player : player.entities) {
-                if (player instanceof MyEnemy || player instanceof EnemyLaser || player instanceof EnemyBee) {
+                if (player instanceof MyEnemy || player instanceof EnemyLaser) {
                     continue;
                 }
                 if (player.bounds.intersects(bounds)) {

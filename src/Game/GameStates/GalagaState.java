@@ -1,5 +1,6 @@
 package Game.GameStates;
 
+import Game.Galaga.Entities.EnemyBee;
 import Game.Galaga.Entities.EntityManager;
 import Game.Galaga.Entities.PlayerShip;
 import Main.Handler;
@@ -9,6 +10,7 @@ import Resources.Images;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import Game.Galaga.Entities.MyEnemy;
 
 /**
  * Created by AlexVR on 1/24/2020.
@@ -20,6 +22,10 @@ public class GalagaState extends State {
 	private Animation titleAnimation;
 	public int selectPlayers = 1;
 	public int startCooldown = 60*7;//seven seconds for the music to finish
+	
+	boolean added=true;
+	public int cooldown=60*4;
+	int timeAlive=0;
 
     public GalagaState(Handler handler){
         super(handler);
@@ -35,6 +41,25 @@ public class GalagaState extends State {
                 entityManager.tick();
             }else{
                 startCooldown--;
+            }
+            if(added) {
+            	if(cooldown<=0) {
+            		added=true;
+            	}else {
+            		cooldown--;
+            	}
+            	for(int i=3; i<5;i++) {
+            		for(int j=0;j<8;j++) {
+            			handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,i,j));
+            			added=false;
+            		}
+            	}
+            	for(int i=1;i<3;i++) {
+            		for(int j=1;j<7;j++) {
+            			handler.getGalagaState().entityManager.entities.add(new MyEnemy(0,0,32,32,handler,i,j));
+            			
+            		}
+            	}
             }
         }else{
             titleAnimation.tick();

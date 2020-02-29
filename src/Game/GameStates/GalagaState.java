@@ -25,7 +25,6 @@ public class GalagaState extends State {
 	
 	boolean added=true;
 	public int cooldown=60*4;
-	int timeAlive=0;
 
     public GalagaState(Handler handler){
         super(handler);
@@ -42,7 +41,7 @@ public class GalagaState extends State {
             }else{
                 startCooldown--;
             }
-            if(added) {
+            if(added || handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)) {
             	if(cooldown<=0) {
             		added=true;
             	}else {

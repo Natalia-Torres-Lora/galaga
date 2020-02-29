@@ -13,7 +13,7 @@ public class KeyManager implements KeyListener {
 	private boolean[] keys,justPressed,cantPress;
 	public boolean up=false, down=false, left=false, right=false;
 	public boolean pausebutt=false;
-	public boolean die=false, addLife=false;
+	public boolean die=false, addLife=false, spawnMyEnemy=false, spawnEnemyBee=false;
 	public boolean addBee=false;
 
 
@@ -48,8 +48,8 @@ public class KeyManager implements KeyListener {
 		
 		die = keyJustPressed(KeyEvent.VK_N);
 		addLife = keyJustPressed(KeyEvent.VK_L);
-		
-		addBee = keys[KeyEvent.VK_P];
+		spawnMyEnemy=keyJustPressed(KeyEvent.VK_O);
+		spawnEnemyBee=keyJustPressed(KeyEvent.VK_P);
 
 	}
 

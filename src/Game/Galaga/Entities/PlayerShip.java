@@ -56,18 +56,18 @@ public class PlayerShip extends BaseEntity{
                 handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
             }
-            if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
+            if(handler.getKeyManager().spawnEnemyBee) {
             	int row= new Random().nextInt(2)+3;
             	int col= new Random().nextInt(8);
             	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
-
+            	
             }
-            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)) {
+            if(handler.getKeyManager().spawnMyEnemy) {
             	int row= new Random().nextInt(2)+1;
             	int col= new Random().nextInt(6)+1;
             	handler.getGalagaState().entityManager.entities.add(new MyEnemy(0,0,32,32,handler,row,col));
-            }           
-            
+            	
+            }          
             //Adding left and right bounds
             if (handler.getKeyManager().left) {
                 x -= (speed);
@@ -86,6 +86,7 @@ public class PlayerShip extends BaseEntity{
 					handler.changeState(handler.getGameOverState());
 				}
 				else {
+					destroyed=true;
 					setHealth(getHealth()-1);
 				}
 				
